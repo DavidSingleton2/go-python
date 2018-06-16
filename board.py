@@ -75,16 +75,15 @@ class board:
       replacement[pos[0]][pos[1]] = target
       
       for group in self.forestFire(opponent, replacement):
-        if (0 not in self.getVals(group[1])):
-          print(group)
+        
+        if (0 not in self.getVals(group[1], replacement)):
           for node in group[0]:
-            print(node)
             replacement[node[0]][node[1]] = 0
             self.__taken[target].append(node)
       
+      
       for group in self.forestFire(target, replacement):
-        print(self.getVals(group[1]))
-        if 0 not in self.getVals(group[1]):
+        if 0 not in self.getVals(group[1], replacement):
           valid = False
       
       for state in self.__history:
@@ -182,17 +181,17 @@ class board:
             nodesChecked[row][col] = 1
     return groups
   
-  def getVals(self, nodes):
+  def getVals(self, nodes, grid):
     vals = []
     for node in nodes:
-      vals.append(self.__grid[node[0]][node[1]])
+      vals.append(grid[node[0]][node[1]])
     return vals
 
 test = [
   [0,0,0,0,0],
-  [0,0,2,2,0],
-  [0,2,1,0,2],
-  [0,0,2,2,0],
+  [0,2,1,1,0],
+  [2,0,2,1,1],
+  [0,2,1,1,0],
   [0,0,0,0,0]
         ]
 test1 = board(5, board=test)
