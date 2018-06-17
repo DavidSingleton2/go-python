@@ -1,6 +1,7 @@
 import re
 import copy
-class board:
+import goAI
+class Board:
   def __init__(self, size, opponent=False, board=None):
       self.__size = size
       if size < 10:
@@ -27,10 +28,12 @@ class board:
                         for col in range(self.__size)]
       self.__history = []
       self.__taken = [[] for x in range(3)]
+      self.__score = 0
 
   def player(self):
     self.printGrid()
     print('It is '+self.__playerName + '\'s turn')
+    self.printScore()
     print('Place a stone in the format [letter][number]')
     print('For Example: E3 or A11')
     valid = False
@@ -52,6 +55,35 @@ class board:
         print('Invalid Input, grid position is not formatted correctly. '+
         ' Please attempt correct formatting [letter][number]')
   
+  def opponent(self, goAI=None):
+    if goAI == None:
+      self.printGrid()
+      print('It is '+self.__opponentName + '\'s turn')
+      self.printScore()
+      print('Place a stone in the format [letter][number]')
+      print('For Example: E3 or A11')
+      valid = False
+      while valid != True:
+        pos = input('Stone Position: ')
+        if self.__acceptableInput.match(pos):
+          if (self.charToInteger(pos[0]) < self.__size and 
+              int(pos[1:])-1 < self.__size):
+            if self.validate((int(pos[1:])-1,
+                self.charToInteger(pos[0])),2):
+              valid = True
+            else:
+              print('Move is invalid. Make sure the space is not occupied, the'+
+                ' move does not consitute suicide and does not return the game'+
+                ' to a previous state')
+          else:
+            print('Invalid Input. The Grid Position exceeds boundaries of grid')
+        else:
+          print('Invalid Input, grid position is not formatted correctly. '+
+          ' Please attempt correct formatting [letter][number]')
+    else:
+      turn = goAI.play(self.__grid)
+      while self.validate(turn, 2) != True:
+        turn = goAI.play(self.__grid)
   def printGrid(self):
     print(('   '+('%s ')*(self.__size))%
       tuple(map((
@@ -91,7 +123,9 @@ class board:
           valid = False
       
       if valid == True:
+        self.__history.append(self.__grid)
         self.__grid = replacement
+        self.updateScore()
     else:
       valid = False
     return valid
@@ -187,14 +221,25 @@ class board:
       vals.append(grid[node[0]][node[1]])
     return vals
 
-test = [
-  [0,0,0,0,0],
-  [0,2,1,1,0],
-  [2,0,2,1,1],
-  [0,2,1,1,0],
-  [0,0,0,0,0]
-        ]
-test1 = board(5, board=test)
+  def updateScore(self):
+    self.__score = 0
+    for row in range(len(self.__grid)):
+      for col in self.__grid[row]:
+        if col == 1:
+          self.__score = self.__score + .25
+        if col == 2:
+          self.__score = self.__score - .25
+    for taken in self.__taken[1]:
+      self.__score += .25
+    for taken in self.__taken[2]:
+      self.__score -= .25
 
-test1.player()
-test1.printGrid()
+  def printScore(self):
+    if self.__score > 0:
+      print(self.__playerName+" has the advantage by "+
+        str(self.__score)+" points.")
+    elif self.__score < 0:
+      print(self.__opponentName+" has the advantage by "+
+        str(self.__score*-1)+" points.")
+    else:
+      print("Neither player has the advantage.")
