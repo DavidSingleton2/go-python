@@ -36,7 +36,7 @@ class goAI():
       
   @staticmethod
   def invSigmoid(x):
-    return 1 - (1/m.exp(x))
+    return (1/m.exp(x))
 
 
   # Purpose: Using the target stone colour, create a 2D array of groups and 

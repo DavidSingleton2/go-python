@@ -3,6 +3,7 @@ import copy
 import goAI
 class Board:
   def __init__(self, size, opponent=False, board=None):
+      self.__finish = False
       self.__size = size
       if size < 10:
         self.__acceptableInput = re.compile(r'^([A-Z][0-9])$')
@@ -243,3 +244,6 @@ class Board:
         str(self.__score*-1)+" points.")
     else:
       print("Neither player has the advantage.")
+  
+  def win(self):
+    return self.__finish

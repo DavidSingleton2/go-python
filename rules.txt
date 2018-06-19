@@ -1,0 +1,38 @@
+Welcome to the Go Game Guru's Virtual Go Program! This program aims to teach
+you the basics of Go, as well as simulate the experience of playing go against
+a real player.
+While go may seem complicated, it has rather simple rules. Play occurs as 
+follows:
+1.  Go is a board game between to players, black and white.
+2.  Go is usually played on a 19x19 Grid. A player may place a stone on an
+    intersection, denoted by a '✛' in the game. Intersections are said to be 
+    adjacent if they are orthagonally positioned next to each other.
+3.  Go is played with stones, denoted as '⚫' and '⚪' in the game. Each player
+    has an unlimited amount of stones.
+4.  At any time, an intersection is either unoccupied, occupied by a black,
+    or occupied by a white stone.
+5.  Stones are consisdered connected if it is possible to draw a path between
+    them only moving orthagonally and only encountering stones of the same 4
+    colour.
+6.  A liberty is an empty, unoccupied intersection immediately adjacent to a 
+   stone or group of stones.
+ZZZ
+7.  The board starts empty.
+8.  Black moves first. Following this first move, the players alternate.
+9.  On their turn, a player may either pass or play. A play consists of the
+    the following steps.
+    a. Placing a stone of their colour at an empty intersection
+    b. Removing from the board any stones/stone groups of their opponents 
+       colour which have no liberties.
+    c. Removing from the board any stone/stone groups of their own colour which
+       have no liberties.
+   Important Note: The Go Game Guru Software automatically removes stones with
+   no remaining errors.
+10. A play is considered illegal if:
+    a. The play does not remove the opponents stones and instead exclusively
+       removes the stones of the player.
+    b. The play recreates an indentical board state which has previously 
+       occurred.
+11. Play ends when there are no remaining plays or both players pass 
+    consecutively
+999
