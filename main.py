@@ -101,10 +101,9 @@ def menu():
     # the next 6 lines print out menu selections
     print("Please make a menu selection: ")
     print("1. Play Now!")
-    print("2. Learn to Play!")
-    print("3. Rule Set")
-    print("4. Leaderboards")
-    print("5. Exit the gane :(")
+    print("2. Rules of Go")
+    print("3. Leaderboards")
+    print("4. Exit the gane :(")
     # Prompts the user for a menu selection and stores it in selection var
     selection =  input("Please make a menu selection from 1-5: ")
     # If statement executes only when user input matches regex pattern
@@ -117,10 +116,8 @@ def menu():
       if selection == 1:
         gameplay()
       elif selection == 2:
-        tutorial()
-      elif selection == 3:
         rulebook()
-      elif selection == 4:
+      elif selection == 3:
         leaderboards()
       else:
         print("Bye!")
@@ -459,8 +456,5 @@ def leaderboardSortMargin(array):
       index += 1
     # Iterates sorted, in effect decrementing the upper bound.
     sorted +=1
-
-def tutorial():
-  return 'stub'
 
 main()
