@@ -3,16 +3,17 @@ import math as m
 class goAI():
   def __init__(self, difficulty=0, size=19):
     self.__difficulty = difficulty
+    self.__attempts = 0
   
   def play(self, board):
     if self.__difficulty == 0:
       x = r.randint(0, len(board)-1)
       y = r.randint(0, len(board)-1)
     else:
-      x, y = self.pursue(board)
+      x, y = self.pursue(board, self.__difficulty)
     return (x,y)
   
-  def pursue(self, board):
+  def pursue(self, board, difficulty):
     targets = self.forestFire(1, board)
     x = r.randint(0,len(board)-1)
     y = r.randint(0,len(board)-1)
@@ -25,11 +26,14 @@ class goAI():
           targetBounds.append(coords)
       if potential < self.invSigmoid(len(targetBounds)):
         candidates = targetBounds
-    
-    print(candidates, self.invSigmoid(len(candidates)))
-    if candidates and (r.randint(0,10)) > 1:
+
+    if candidates and (r.randint(0,10)) > 2/difficulty:
       x = candidates[0][0]
       y = candidates[0][1]
+    if (r.randint(0,20)) < 2/difficulty:
+      x = -1
+      y = 0
+    
     return (x,y)
 
 
